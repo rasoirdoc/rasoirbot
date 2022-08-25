@@ -2,16 +2,14 @@ package io.github.rasoirdoc.rasoirbot.handler
 
 import discord4j.core.GatewayDiscordClient
 import discord4j.core.event.domain.lifecycle.ReadyEvent
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.reactor.awaitSingle
 import mu.KotlinLogging
 
 class ReadyHandler(private val hardCodedAdmins: List<String>) : EventHandler<ReadyEvent> {
     private val logger = KotlinLogging.logger {}
 
-    override suspend fun handle(
-        event: ReadyEvent,
-        client: GatewayDiscordClient
-    ) {
+    override suspend fun CoroutineScope.handle(event: ReadyEvent, client: GatewayDiscordClient) {
         val self = event.self
         logger.info { "Logged in as ${self.tag}" }
         val guild = client.guilds.collectList().awaitSingle()
